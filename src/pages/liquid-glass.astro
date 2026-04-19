@@ -18,7 +18,7 @@ import '../styles/liquid-glass.css';
 
   <Lism as="main">
     <Center as="section" isContainer set="gutter" py={['40', '60']}>
-      <Stack g="12" maxW="800">
+      <Stack g="12" max-w="800px">
         <Text fz="xs" fw="bold" style={{ 'letter-spacing': '0.2em', 'text-shadow': '0 1px 8px rgba(0,0,0,0.35)', color: 'white' }}>LIQUID GLASS · CONTROL CENTER</Text>
         <Heading level="1" fz={['3xl', '5xl']} ff="accent" fw="bold" style={{ 'text-shadow': '0 2px 20px rgba(0,0,0,0.35)', color: 'white' }}>
           iOS 26 風 Control Center
@@ -29,7 +29,7 @@ import '../styles/liquid-glass.css';
       </Stack>
     </Center>
 
-    <Lism as="section" isContainer set="gutter" py="40" maxW="1000" mi="auto">
+    <Lism as="section" isContainer set="gutter" py="40" max-w="1000px" mi="auto">
       <Grid g="16" style={{ 'grid-template-columns': 'repeat(3, minmax(0, 1fr))', 'grid-auto-rows': 'minmax(120px, auto)' }}>
 
         {/* Connectivity quad */}
@@ -55,7 +55,7 @@ import '../styles/liquid-glass.css';
         {/* Music player */}
         <Box class="lq lq-refract" bdrs="28" p="20" style={{ 'grid-column': 'span 1' }}>
           <Flex g="14" ai="center">
-            <Box w="56" h="56" bdrs="12" style={{ background: 'linear-gradient(135deg, oklch(70% 0.25 20), oklch(55% 0.28 330))', 'box-shadow': '0 4px 12px rgba(0,0,0,0.3)' }}></Box>
+            <Box w="56px" h="56px" bdrs="12" style={{ background: 'linear-gradient(135deg, oklch(70% 0.25 20), oklch(55% 0.28 330))', 'box-shadow': '0 4px 12px rgba(0,0,0,0.3)' }}></Box>
             <Stack g="2" fxg="1" style={{ 'min-width': '0' }}>
               <Text fw="bold" fz="s" style={{ overflow: 'hidden', 'text-overflow': 'ellipsis', 'white-space': 'nowrap' }}>Refraction</Text>
               <Text fz="xs" o="80" style={{ overflow: 'hidden', 'text-overflow': 'ellipsis', 'white-space': 'nowrap' }}>Liquid Glass Band</Text>
@@ -134,7 +134,7 @@ import '../styles/liquid-glass.css';
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
             </Flex>
             <Text fz="3xl" fw="bold" lh="xs">82%</Text>
-            <Box bdrs="999" bgc="base-2" h="6" style={{ background: 'color-mix(in srgb, white 25%, transparent)', overflow: 'hidden' }}>
+            <Box bdrs="999" bgc="base-2" h="6px" style={{ background: 'color-mix(in srgb, white 25%, transparent)', overflow: 'hidden' }}>
               <Box h="100%" w="82%" bdrs="999" style={{ background: 'oklch(80% 0.2 140)' }}></Box>
             </Box>
           </Stack>

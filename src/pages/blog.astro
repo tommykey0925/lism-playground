@@ -44,7 +44,7 @@ const posts = [
   <Lism as="main">
     {/* Hero */}
     <Center as="section" isContainer set="gutter" py={['80', '120']}>
-      <Stack g="32" ai="center" maxW="840">
+      <Stack g="32" ai="center" max-w="840px">
         <Box px="16" py="8" bdrs="999" class="glass">
           <Text fz="xs" fw="bold" style={{ 'letter-spacing': '0.15em' }}>GLASS BLOG</Text>
         </Box>
@@ -77,7 +77,7 @@ const posts = [
                 Apple が iOS 26 で打ち出した Liquid Glass は、単なる装飾ではなく"物理挙動を取り戻した UI"への回帰でもある。Web での実装可能性を考える。
               </Text>
               <Flex g="8" ai="center">
-                <Box w="32" h="32" bdrs="999" bgc="link"></Box>
+                <Box w="32px" h="32px" bdrs="999" bgc="link"></Box>
                 <Stack g="2">
                   <Text fz="s" fw="bold">Tommy Key</Text>
                   <Text fz="xs" c="text-2">2026-04-19 · 6 min read</Text>
@@ -120,10 +120,10 @@ const posts = [
     {/* About / Newsletter */}
     <Lism as="section" id="about" isContainer set="gutter" py="60">
       <Box class="glass" bdrs="24" p={['24', '40']}>
-        <Stack g="20" ai="center" ta="center" maxW="640" mi="auto">
+        <Stack g="20" ai="center" ta="center" max-w="640px" mi="auto">
           <Heading level="2" ff="accent" fz={['2xl', '3xl']}>Stay in the loop</Heading>
           <Text c="text-2">週次で CSS と UI 表現のトピックをお届け。購読はいつでも解除可能。</Text>
-          <Flex g="8" w="100%" maxW="480" fxd={['column', 'row']}>
+          <Flex g="8" w="100%" max-w="480px" fxd={['column', 'row']}>
             <Lism as="input" type="email" placeholder="your@email.com" fxg="1" px="16" py="12" bdrs="10" bd bdc="divider" bgc="base" c="text" fz="s" style={{ outline: 'none' }} />
             <Lism as="button" type="button" set="plain transition" bgc="text" c="base" px="24" py="12" bdrs="10" fw="bold">購読する</Lism>
           </Flex>

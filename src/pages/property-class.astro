@@ -20,7 +20,7 @@ const colorSwatches = [
 <Layout title="Property Class — Lism Playground">
   <Lism as="main">
     <Center as="section" isContainer set="gutter" py={['40', '60']}>
-      <Stack g="12" maxW="800">
+      <Stack g="12" max-w="800px">
         <Text fz="xs" fw="bold" c="text-2" style={{ 'letter-spacing': '0.2em' }}>PROPERTY CLASS</Text>
         <Heading level="1" fz={['3xl', '5xl']} ff="accent" fw="bold">Property Class</Heading>
         <Text c="text-2">よく使う CSS プロパティのユーティリティを値別に並べて比較</Text>
@@ -40,7 +40,7 @@ const colorSwatches = [
             {spacingTokens.map((p) => (
               <Stack g="6" ai="center">
                 <Box p={p} bdrs="10" bd bdc="accent" w="100%" style={{ 'border-style': 'dashed', background: 'color-mix(in srgb, var(--accent) 8%, transparent)' }}>
-                  <Box bdrs="10" bgc="accent" h="24"></Box>
+                  <Box bdrs="10" bgc="accent" h="24px"></Box>
                 </Box>
                 <Text fz="xs" ff="mono" c="text-2">-p:{p}</Text>
               </Stack>
@@ -57,7 +57,7 @@ const colorSwatches = [
           <Cluster g="20">
             {radiusTokens.map((r) => (
               <Stack g="6" ai="center">
-                <Box w="80" h="80" bgc="accent" bdrs={r}></Box>
+                <Box w="80px" h="80px" bgc="accent" bdrs={r}></Box>
                 <Text fz="xs" ff="mono" c="text-2">-bdrs:{r}</Text>
               </Stack>
             ))}
@@ -73,7 +73,7 @@ const colorSwatches = [
           <Stack g="10">
             {fzTokens.map((t) => (
               <Flex ai="baseline" g="20">
-                <Text fz="xs" ff="mono" c="text-2" w="80">-fz:{t}</Text>
+                <Text fz="xs" ff="mono" c="text-2" w="80px">-fz:{t}</Text>
                 <Text fz={t} fw="bold">Lism CSS</Text>
               </Flex>
             ))}
@@ -89,7 +89,7 @@ const colorSwatches = [
           <FluidCols g="20" style={{ '--cols': '180px' }}>
             {shadowTokens.map((s) => (
               <Stack g="8" ai="center" p="20">
-                <Box w="100" h="100" bdrs="20" bgc="base" bxsh={s}></Box>
+                <Box w="100px" h="100px" bdrs="20" bgc="base" bxsh={s}></Box>
                 <Text fz="xs" ff="mono" c="text-2">-bxsh:{s}</Text>
               </Stack>
             ))}
@@ -105,7 +105,7 @@ const colorSwatches = [
           <FluidCols g="12" style={{ '--cols': '140px' }}>
             {colorSwatches.map(({ name, text }) => (
               <Stack g="6" ai="center">
-                <Box bgc={name} c={text} w="100%" h="60" bdrs="10" bd bdc="divider" d="flex" ai="center" jc="center">
+                <Box bgc={name} c={text} w="100%" h="60px" bdrs="10" bd bdc="divider" d="flex" ai="center" jc="center">
                   <Text fz="xs" ff="mono">{name}</Text>
                 </Box>
               </Stack>
