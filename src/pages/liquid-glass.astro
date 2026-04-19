@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Lism, Stack, Center, Heading, Text, Flex, Grid, Box } from 'lism-css/astro';
+import '../styles/liquid-glass.css';
+---
+
+<Layout title="Liquid Glass — Lism Playground">
+  <div class="lq-wallpaper"></div>
+
+  <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
+    <defs>
+      <filter id="lq-refraction" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="7" result="turb"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="turb" scale="22" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      </filter>
+    </defs>
+  </svg>
+
+  <Lism as="main">
+    <Center as="section" isContainer set="gutter" py={['40', '60']}>
+      <Stack g="12" maxW="800">
+        <Text fz="xs" fw="bold" style={{ 'letter-spacing': '0.2em', 'text-shadow': '0 1px 8px rgba(0,0,0,0.35)', color: 'white' }}>LIQUID GLASS · CONTROL CENTER</Text>
+        <Heading level="1" fz={['3xl', '5xl']} ff="accent" fw="bold" style={{ 'text-shadow': '0 2px 20px rgba(0,0,0,0.35)', color: 'white' }}>
+          iOS 26 風 Control Center
+        </Heading>
+        <Text fz={['s', 'm']} style={{ 'text-shadow': '0 1px 8px rgba(0,0,0,0.3)', color: 'white' }}>
+          Lism CSS をベースに、`@layer lism-custom` で独自の Liquid Glass レイヤーを追加。Chromium では SVG Displacement による屈折も効きます。
+        </Text>
+      </Stack>
+    </Center>
+
+    <Lism as="section" isContainer set="gutter" py="40" maxW="1000" mi="auto">
+      <Grid g="16" style={{ 'grid-template-columns': 'repeat(3, minmax(0, 1fr))', 'grid-auto-rows': 'minmax(120px, auto)' }}>
+
+        {/* Connectivity quad */}
+        <Box class="lq lq-refract" bdrs="28" p="16" style={{ 'grid-column': 'span 1' }}>
+          <Grid g="12" style={{ 'grid-template-columns': 'repeat(2, 1fr)' }}>
+            <button class="lq-toggle" aria-pressed="true" aria-label="Airplane mode">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            </button>
+            <button class="lq-toggle" aria-pressed="true" aria-label="Wi-Fi">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>
+              </svg>
+            </button>
+            <button class="lq-toggle" aria-pressed="true" aria-label="Bluetooth">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 17.5 17.5 12 22V2l5.5 4.5L6.5 17.5"/></svg>
+            </button>
+            <button class="lq-toggle" aria-pressed="false" aria-label="AirDrop">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6a6 6 0 0 1 6 6"/></svg>
+            </button>
+          </Grid>
+        </Box>
+
+        {/* Music player */}
+        <Box class="lq lq-refract" bdrs="28" p="20" style={{ 'grid-column': 'span 1' }}>
+          <Flex g="14" ai="center">
+            <Box w="56" h="56" bdrs="12" style={{ background: 'linear-gradient(135deg, oklch(70% 0.25 20), oklch(55% 0.28 330))', 'box-shadow': '0 4px 12px rgba(0,0,0,0.3)' }}></Box>
+            <Stack g="2" fxg="1" style={{ 'min-width': '0' }}>
+              <Text fw="bold" fz="s" style={{ overflow: 'hidden', 'text-overflow': 'ellipsis', 'white-space': 'nowrap' }}>Refraction</Text>
+              <Text fz="xs" o="80" style={{ overflow: 'hidden', 'text-overflow': 'ellipsis', 'white-space': 'nowrap' }}>Liquid Glass Band</Text>
+            </Stack>
+            <button class="lq-btn" aria-label="Play" style="width: 44px; height: 44px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+          </Flex>
+        </Box>
+
+        {/* Sliders: brightness + volume */}
+        <Box style={{ 'grid-column': 'span 1', 'grid-row': 'span 2' }}>
+          <Grid g="16" h="100%" style={{ 'grid-template-columns': 'repeat(2, 1fr)' }}>
+            <div class="lq lq-slider" data-slider="brightness" style="height: 280px;">
+              <div class="lq-slider_fill" style="height: 70%;"></div>
+              <div class="lq-slider_icon" style="position: absolute; bottom: 16px; left: 0; right: 0;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+              </div>
+            </div>
+            <div class="lq lq-slider" data-slider="volume" style="height: 280px;">
+              <div class="lq-slider_fill" style="height: 45%;"></div>
+              <div class="lq-slider_icon" style="position: absolute; bottom: 16px; left: 0; right: 0;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+              </div>
+            </div>
+          </Grid>
+        </Box>
+
+        {/* Orientation + Focus + Mute row */}
+        <Box class="lq lq-refract" bdrs="28" p="14" style={{ 'grid-column': 'span 2' }}>
+          <Flex jc="around" ai="center" g="10">
+            <button class="lq-btn" aria-label="Rotation lock" data-toggle>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </button>
+            <button class="lq-btn is-on" aria-label="Do not disturb" data-toggle>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="lq-btn" aria-label="Silent" data-toggle>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+            <button class="lq-btn" aria-label="Flashlight" data-toggle>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6V2H6v4l6 12 6-12z"/></svg>
+            </button>
+          </Flex>
+        </Box>
+
+        {/* Weather widget */}
+        <Box class="lq lq-refract" bdrs="28" p="18">
+          <Stack g="8">
+            <Flex jc="between" ai="center">
+              <Text fz="xs" o="75" fw="bold">TOKYO</Text>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+            </Flex>
+            <Text fz="3xl" fw="bold" lh="xs">22°</Text>
+            <Text fz="xs" o="80">Partly Cloudy · H:24° L:16°</Text>
+          </Stack>
+        </Box>
+
+        {/* Calendar widget */}
+        <Box class="lq lq-refract" bdrs="28" p="18">
+          <Stack g="8">
+            <Flex jc="between" ai="center">
+              <Text fz="xs" o="75" fw="bold">APR 20</Text>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </Flex>
+            <Text fz="l" fw="bold" lh="xs">Design Review</Text>
+            <Text fz="xs" o="80">15:00 — 16:00</Text>
+          </Stack>
+        </Box>
+
+        {/* Battery widget */}
+        <Box class="lq lq-refract" bdrs="28" p="18">
+          <Stack g="8">
+            <Flex jc="between" ai="center">
+              <Text fz="xs" o="75" fw="bold">BATTERY</Text>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
+            </Flex>
+            <Text fz="3xl" fw="bold" lh="xs">82%</Text>
+            <Box bdrs="999" bgc="base-2" h="6" style={{ background: 'color-mix(in srgb, white 25%, transparent)', overflow: 'hidden' }}>
+              <Box h="100%" w="82%" bdrs="999" style={{ background: 'oklch(80% 0.2 140)' }}></Box>
+            </Box>
+          </Stack>
+        </Box>
+
+      </Grid>
+
+      <Stack g="8" ai="center" pt="40">
+        <Text ta="center" fz="xs" o="80" style={{ 'text-shadow': '0 1px 6px rgba(0,0,0,0.4)', color: 'white' }}>
+          Chromium ブラウザでは SVG displacement による屈折表現が有効、Safari/Firefox ではぼかし + 半透明のみにフォールバックします。
+        </Text>
+      </Stack>
+    </Lism>
+  </Lism>
+
+  <script is:inline>
+    // Toggle aria-pressed for connectivity toggles
+    document.querySelectorAll('.lq-toggle').forEach((el) => {
+      el.addEventListener('click', () => {
+        const pressed = el.getAttribute('aria-pressed') === 'true';
+        el.setAttribute('aria-pressed', String(!pressed));
+      });
+    });
+    // Toggle is-on class for round buttons
+    document.querySelectorAll('[data-toggle]').forEach((el) => {
+      el.addEventListener('click', () => el.classList.toggle('is-on'));
+    });
+    // Drag sliders
+    document.querySelectorAll('.lq-slider').forEach((slider) => {
+      const fill = slider.querySelector('.lq-slider_fill');
+      if (!fill) return;
+      let active = false;
+      const update = (clientY) => {
+        const rect = slider.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(100, ((rect.bottom - clientY) / rect.height) * 100));
+        fill.style.height = pct + '%';
+      };
+      const onDown = (e) => { active = true; update(e.touches ? e.touches[0].clientY : e.clientY); };
+      const onMove = (e) => { if (active) update(e.touches ? e.touches[0].clientY : e.clientY); };
+      const onUp = () => { active = false; };
+      slider.addEventListener('mousedown', onDown);
+      slider.addEventListener('touchstart', onDown, { passive: true });
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('touchmove', onMove, { passive: true });
+      window.addEventListener('mouseup', onUp);
+      window.addEventListener('touchend', onUp);
+    });
+  </script>
+</Layout>

@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Lism, Stack, Center, Heading, Text, Link, Flex, FluidCols, Cluster, Box } from 'lism-css/astro';
+
+const posts = [
+  { title: 'Astro 6.0 の新機能まとめ', excerpt: 'ビルドパイプライン刷新と新しい island 戦略について。', cat: 'Astro', date: '2026-04-18' },
+  { title: 'Container Query で設計するコンポーネント', excerpt: '置いた場所に適応する真のレスポンシブ。', cat: 'CSS', date: '2026-04-15' },
+  { title: 'Liquid Glass をピュア CSS で再現する', excerpt: 'SVG filter と backdrop-filter の合わせ技。', cat: 'Design', date: '2026-04-12' },
+  { title: 'Lism CSS v0.14 の破壊的変更', excerpt: '命名整理とトークン変更点まとめ。', cat: 'Lism', date: '2026-04-16' },
+  { title: 'CSS @layer で秩序を手に入れる', excerpt: 'カスケードを設計資産にする方法。', cat: 'CSS', date: '2026-04-08' },
+  { title: 'pnpm workspace で始める monorepo', excerpt: '軽量で速い、最小 monorepo 構成。', cat: 'Tooling', date: '2026-04-02' },
+];
+---
+
+<Layout title="Blog — Lism Playground">
+  <style>
+    .bg-aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 10%, oklch(75% 0.2 320 / 0.55), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 20%, oklch(78% 0.18 210 / 0.5), transparent 60%),
+        radial-gradient(ellipse 70% 60% at 50% 90%, oklch(80% 0.15 140 / 0.45), transparent 60%),
+        linear-gradient(180deg, oklch(98% 0.01 240), oklch(96% 0.02 280));
+    }
+    html[data-theme='dark'] .bg-aurora {
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 10%, oklch(55% 0.25 320 / 0.55), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 20%, oklch(55% 0.22 210 / 0.5), transparent 60%),
+        radial-gradient(ellipse 70% 60% at 50% 90%, oklch(55% 0.2 140 / 0.45), transparent 60%),
+        linear-gradient(180deg, oklch(18% 0.04 260), oklch(10% 0.03 280));
+    }
+    .glass {
+      background: color-mix(in srgb, var(--base) 45%, transparent);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+      box-shadow: 0 8px 32px color-mix(in srgb, var(--text) 8%, transparent);
+    }
+  </style>
+  <div class="bg-aurora"></div>
+
+  <Lism as="main">
+    {/* Hero */}
+    <Center as="section" isContainer set="gutter" py={['80', '120']}>
+      <Stack g="32" ai="center" maxW="840">
+        <Box px="16" py="8" bdrs="999" class="glass">
+          <Text fz="xs" fw="bold" style={{ 'letter-spacing': '0.15em' }}>GLASS BLOG</Text>
+        </Box>
+        <Stack g="16" ta="center">
+          <Heading level="1" ff="accent" fw="bold" fz={['4xl', '6xl']} lh="xs">
+            ガラスの向こうに、<br />言葉を置く。
+          </Heading>
+          <Text c="text-2" fz={['s', 'm']}>
+            モダンな Web 表現を Lism CSS のデフォルトだけで構築した、ブログ風テーマ。
+          </Text>
+        </Stack>
+        <Cluster g="10" jc="center">
+          <Link href="#posts" set="plain transition" bgc="text" c="base" px="24" py="14" bdrs="10" td="none" hov={{ o: '80' }}>記事を読む</Link>
+          <Link href="#about" set="plain transition" c="text" bd bdc="divider" px="24" py="14" bdrs="10" td="none" class="glass" hov={{ bxsh: '2' }}>このサイトについて</Link>
+        </Cluster>
+      </Stack>
+    </Center>
+
+    {/* Feature card */}
+    <Lism as="section" isContainer set="gutter" py="40">
+      <Box class="glass" bdrs="24" p={['24', '40']}>
+        <Flex fxd={['column', 'row']} g="32" ai="center">
+          <Box fxg="1">
+            <Stack g="12">
+              <Text fz="xs" fw="bold" c="link" style={{ 'letter-spacing': '0.15em' }}>FEATURED</Text>
+              <Heading level="2" ff="accent" fz={['2xl', '4xl']} fw="bold" lh="xs">
+                ピックアップ: Liquid Glass は Web に来るか?
+              </Heading>
+              <Text c="text-2">
+                Apple が iOS 26 で打ち出した Liquid Glass は、単なる装飾ではなく"物理挙動を取り戻した UI"への回帰でもある。Web での実装可能性を考える。
+              </Text>
+              <Flex g="8" ai="center">
+                <Box w="32" h="32" bdrs="999" bgc="link"></Box>
+                <Stack g="2">
+                  <Text fz="s" fw="bold">Tommy Key</Text>
+                  <Text fz="xs" c="text-2">2026-04-19 · 6 min read</Text>
+                </Stack>
+              </Flex>
+            </Stack>
+          </Box>
+          <Box w={['100%', '40%']} aspectRatio="4/3" bdrs="16" style={{ background: 'linear-gradient(135deg, oklch(75% 0.2 320), oklch(78% 0.18 210))' }}></Box>
+        </Flex>
+      </Box>
+    </Lism>
+
+    {/* Posts grid */}
+    <Lism as="section" id="posts" isContainer set="gutter" py="60">
+      <Stack g="32">
+        <Flex jc="between" ai="baseline" fxd={['column', 'row']} g="12">
+          <Heading level="2" ff="accent" fz={['2xl', '3xl']}>Latest Posts</Heading>
+          <Link href="#" c="link" fz="s" td="none">すべて見る →</Link>
+        </Flex>
+        <FluidCols g="24" style={{ '--cols': '280px' }}>
+          {posts.map((p) => (
+            <Box class="glass" bdrs="16" p="24" d="block">
+              <Stack g="12">
+                <Flex jc="between" ai="center">
+                  <Box px="10" py="4" bdrs="999" bgc="base-2" bd bdc="divider">
+                    <Text fz="xs" fw="bold">{p.cat}</Text>
+                  </Box>
+                  <Text fz="xs" c="text-2">{p.date}</Text>
+                </Flex>
+                <Heading level="3" fz="l" ff="accent" fw="bold" lh="s">{p.title}</Heading>
+                <Text fz="s" c="text-2">{p.excerpt}</Text>
+                <Link href="#" c="link" fz="s" fw="bold" td="none">Read more →</Link>
+              </Stack>
+            </Box>
+          ))}
+        </FluidCols>
+      </Stack>
+    </Lism>
+
+    {/* About / Newsletter */}
+    <Lism as="section" id="about" isContainer set="gutter" py="60">
+      <Box class="glass" bdrs="24" p={['24', '40']}>
+        <Stack g="20" ai="center" ta="center" maxW="640" mi="auto">
+          <Heading level="2" ff="accent" fz={['2xl', '3xl']}>Stay in the loop</Heading>
+          <Text c="text-2">週次で CSS と UI 表現のトピックをお届け。購読はいつでも解除可能。</Text>
+          <Flex g="8" w="100%" maxW="480" fxd={['column', 'row']}>
+            <Lism as="input" type="email" placeholder="your@email.com" fxg="1" px="16" py="12" bdrs="10" bd bdc="divider" bgc="base" c="text" fz="s" style={{ outline: 'none' }} />
+            <Lism as="button" type="button" set="plain transition" bgc="text" c="base" px="24" py="12" bdrs="10" fw="bold">購読する</Lism>
+          </Flex>
+        </Stack>
+      </Box>
+    </Lism>
+
+    <Lism as="footer" isContainer set="gutter" py="40">
+      <Center>
+        <Text ta="center" c="text-2" fz="xs">
+          © 2026 Lism Playground — Glass Theme
+        </Text>
+      </Center>
+    </Lism>
+  </Lism>
+</Layout>

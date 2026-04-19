@@ -1,0 +1,39 @@
+---
+import { Lism, Flex, Cluster, Link, Text } from 'lism-css/astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const nav = [
+  { href: `${base}/`, label: 'Home' },
+  { href: `${base}/primitives/`, label: 'Primitives' },
+  { href: `${base}/property-class/`, label: 'Property Class' },
+  { href: `${base}/blog/`, label: 'Blog' },
+  { href: `${base}/liquid-glass/`, label: 'Liquid Glass' },
+];
+---
+
+<Lism as="header" isContainer set="gutter" bd-b bdc="divider" pos="sticky" inset-block-start="0" z="10" bgc="base" style={{ '--bgc': 'color-mix(in srgb, var(--base) 80%, transparent)', 'backdrop-filter': 'blur(10px)' }}>
+  <Flex ai="center" jc="between" py="16" g="20">
+    <Link href={`${base}/`} td="none" c="text" fw="bold" fz="l">
+      <Text as="span" ff="accent">Lism Playground</Text>
+    </Link>
+    <Cluster as="nav" g={['5', '10']} ai="center">
+      {nav.map(({ href, label }) => (
+        <Link
+          href={href}
+          set="transition"
+          c="text"
+          fz="s"
+          td="none"
+          px="12"
+          py="6"
+          bdrs="8"
+          hov={{ bgc: 'base-2' }}
+        >
+          {label}
+        </Link>
+      ))}
+      <ThemeToggle />
+    </Cluster>
+  </Flex>
+</Lism>

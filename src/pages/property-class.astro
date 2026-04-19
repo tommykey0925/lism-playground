@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Lism, Stack, Center, Heading, Text, Flex, FluidCols, Cluster, Box } from 'lism-css/astro';
+
+const spacingTokens = ['5', '10', '15', '20', '30', '40'];
+const radiusTokens = ['4', '8', '12', '20', '999'];
+const fzTokens = ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'];
+const shadowTokens = ['1', '2', '3', '4'];
+---
+
+<Layout title="Property Class — Lism Playground">
+  <Lism as="main">
+    <Center as="section" isContainer set="gutter" py={['40', '60']}>
+      <Stack g="12" maxW="800">
+        <Text fz="xs" fw="bold" c="text-2" style={{ 'letter-spacing': '0.2em' }}>PROPERTY CLASS</Text>
+        <Heading level="1" fz={['3xl', '5xl']} ff="accent" fw="bold">Property Class</Heading>
+        <Text c="text-2">よく使う CSS プロパティのユーティリティを値別に並べて比較</Text>
+      </Stack>
+    </Center>
+
+    <Lism as="section" isContainer set="gutter" py="40">
+      <Stack g="60">
+
+        {/* padding */}
+        <Stack g="16">
+          <Stack g="4">
+            <Heading level="2" fz="2xl" ff="accent">-p (padding)</Heading>
+            <Text c="text-2" fz="s">SPACING トークン別に padding を可視化</Text>
+          </Stack>
+          <FluidCols g="12" style={{ '--cols': '160px' }}>
+            {spacingTokens.map((p) => (
+              <Stack g="6" ai="center">
+                <Box p={p} bdrs="8" bd bdc="divider" bgc="base-2" w="100%">
+                  <Box bdrs="4" bgc="link" h="24"></Box>
+                </Box>
+                <Text fz="xs" ff="mono" c="text-2">-p:{p}</Text>
+              </Stack>
+            ))}
+          </FluidCols>
+        </Stack>
+
+        {/* border-radius */}
+        <Stack g="16">
+          <Stack g="4">
+            <Heading level="2" fz="2xl" ff="accent">-bdrs (border-radius)</Heading>
+            <Text c="text-2" fz="s">角丸の値ごとの差を比較</Text>
+          </Stack>
+          <Cluster g="20">
+            {radiusTokens.map((r) => (
+              <Stack g="6" ai="center">
+                <Box w="80" h="80" bgc="base-2" bd bdc="divider" bdrs={r}></Box>
+                <Text fz="xs" ff="mono" c="text-2">-bdrs:{r}</Text>
+              </Stack>
+            ))}
+          </Cluster>
+        </Stack>
+
+        {/* font-size */}
+        <Stack g="16">
+          <Stack g="4">
+            <Heading level="2" fz="2xl" ff="accent">-fz (font-size)</Heading>
+            <Text c="text-2" fz="s">トークン別のフォントサイズ</Text>
+          </Stack>
+          <Stack g="10">
+            {fzTokens.map((t) => (
+              <Flex ai="baseline" g="20">
+                <Text fz="xs" ff="mono" c="text-2" w="80">-fz:{t}</Text>
+                <Text fz={t} fw="bold">Lism CSS</Text>
+              </Flex>
+            ))}
+          </Stack>
+        </Stack>
+
+        {/* box-shadow */}
+        <Stack g="16">
+          <Stack g="4">
+            <Heading level="2" fz="2xl" ff="accent">-bxsh (box-shadow)</Heading>
+            <Text c="text-2" fz="s">影の段階別表現</Text>
+          </Stack>
+          <FluidCols g="20" style={{ '--cols': '180px' }}>
+            {shadowTokens.map((s) => (
+              <Stack g="8" ai="center" p="20">
+                <Box w="100" h="100" bdrs="12" bgc="base" bd bdc="divider" bxsh={s}></Box>
+                <Text fz="xs" ff="mono" c="text-2">-bxsh:{s}</Text>
+              </Stack>
+            ))}
+          </FluidCols>
+        </Stack>
+
+        {/* bgc */}
+        <Stack g="16">
+          <Stack g="4">
+            <Heading level="2" fz="2xl" ff="accent">-bgc (background-color)</Heading>
+            <Text c="text-2" fz="s">Lism の基本トークン配色</Text>
+          </Stack>
+          <FluidCols g="12" style={{ '--cols': '140px' }}>
+            {[
+              { name: 'base', text: 'text' },
+              { name: 'base-2', text: 'text' },
+              { name: 'text', text: 'base' },
+              { name: 'text-2', text: 'base' },
+              { name: 'link', text: 'base' },
+            ].map(({ name, text }) => (
+              <Stack g="6" ai="center">
+                <Box bgc={name} c={text} w="100%" h="60" bdrs="8" bd bdc="divider" d="flex" ai="center" jc="center">
+                  <Text fz="xs" ff="mono">{name}</Text>
+                </Box>
+              </Stack>
+            ))}
+          </FluidCols>
+        </Stack>
+
+      </Stack>
+    </Lism>
+  </Lism>
+</Layout>

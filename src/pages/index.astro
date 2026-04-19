@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Lism, Stack, Center, Heading, Text, Link, FluidCols, Flex, Cluster } from 'lism-css/astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const samples = [
+  {
+    href: `${base}/primitives/`,
+    title: 'Layout Primitives',
+    desc: 'l--stack, l--flex, l--grid, l--tileGrid, l--sideMain のショーケース',
+    tag: 'Demo',
+  },
+  {
+    href: `${base}/property-class/`,
+    title: 'Property Class',
+    desc: '-p, -bgc, -bxsh, -bdrs, -fz などのユーティリティを可視化',
+    tag: 'Demo',
+  },
+  {
+    href: `${base}/blog/`,
+    title: 'Blog / LP Theme',
+    desc: 'Glassmorphism 全面適用の実用デザインサンプル',
+    tag: 'Theme',
+  },
+  {
+    href: `${base}/liquid-glass/`,
+    title: 'Liquid Glass',
+    desc: 'iOS 26 Control Center 風の液体ガラス UI',
+    tag: 'Theme',
+  },
+];
+---
+
+<Layout title="Lism Playground">
+  <Lism as="main">
+    <Center as="section" isContainer set="gutter" py={['60', '100']}>
+      <Stack g="40" ai="center">
+        <Stack g="16" ta="center" maxW="720">
+          <Text fz="xs" fw="bold" c="text-2" style={{ 'letter-spacing': '0.2em' }}>LISM CSS · PLAYGROUND</Text>
+          <Heading level="1" ff="accent" fw="bold" fz={['4xl', '6xl']} lh="xs">
+            レイアウトも、ユーティリティも、<br />ガラスも。
+          </Heading>
+          <Text c="text-2" fz={['s', 'm']}>
+            Lism CSS の Primitives / Property Class / ガラス表現を 5 ページで体験するサンプル集。
+          </Text>
+        </Stack>
+        <Cluster g="10" jc="center">
+          <Link
+            href={`${base}/liquid-glass/`}
+            set="plain transition"
+            bgc="text"
+            c="base"
+            bd
+            bdc="text"
+            px="24"
+            py="14"
+            lh="xs"
+            bdrs="10"
+            td="none"
+            hov={{ bxsh: '3', c: 'text', bgc: 'transparent' }}>Liquid Glass を見る</Link>
+          <Link
+            href="https://lism-css.com/en/"
+            target="_blank"
+            set="plain transition"
+            c="text"
+            bd
+            bdc="divider"
+            px="24"
+            py="14"
+            lh="xs"
+            bdrs="10"
+            td="none"
+            hov={{ bgc: 'base-2' }}>Lism CSS 公式</Link>
+        </Cluster>
+      </Stack>
+    </Center>
+
+    <Lism as="section" isContainer set="gutter" py={['40', '80']}>
+      <Stack g="32">
+        <Stack g="8">
+          <Heading level="2" fz={['2xl', '3xl']} ff="accent">Samples</Heading>
+          <Text c="text-2" fz="s">各ページへのリンク</Text>
+        </Stack>
+        <FluidCols g="20" style={{ '--cols': '260px' }}>
+          {samples.map(({ href, title, desc, tag }) => (
+            <Link
+              href={href}
+              td="none"
+              c="text"
+              set="transition"
+              d="block"
+              pos="relative"
+              p="24"
+              bdrs="16"
+              bd
+              bdc="divider"
+              style={{ background: 'color-mix(in srgb, var(--base) 60%, transparent)', 'backdrop-filter': 'blur(8px)' }}
+              hov={{ bxsh: '3' }}
+            >
+              <Stack g="12">
+                <Text fz="xs" fw="bold" c="text-2" style={{ 'letter-spacing': '0.15em' }}>{tag.toUpperCase()}</Text>
+                <Heading level="3" fz="xl" ff="accent" fw="bold">{title}</Heading>
+                <Text c="text-2" fz="s">{desc}</Text>
+                <Flex jc="end">
+                  <Text fz="s" c="link" fw="bold">Open →</Text>
+                </Flex>
+              </Stack>
+            </Link>
+          ))}
+        </FluidCols>
+      </Stack>
+    </Lism>
+
+    <Lism as="footer" isContainer set="gutter" py="40" bd-t bdc="divider">
+      <Center>
+        <Text ta="center" c="text-2" fz="xs">
+          Built with <Link href="https://lism-css.com/">Lism CSS v0.14.0</Link> · <Link href="https://astro.build/">Astro</Link>
+        </Text>
+      </Center>
+    </Lism>
+  </Lism>
+</Layout>
