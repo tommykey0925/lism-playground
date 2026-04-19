@@ -1,10 +1,16 @@
 /* Liquid Glass — iOS 26 Control Center inspired
- * 1. Colorful wallpaper background so refraction is visible
- * 2. backdrop-filter with blur + saturate + brightness
- * 3. SVG displacement filter for refraction (Chromium only — graceful degradation elsewhere)
- * 4. Multi-layer highlights (inner border + specular glow)
+ *
+ * Upgrades from glassmorphism → true liquid glass:
+ *   1. Physics-based displacement map (see #lq-refraction in liquid-glass.astro)
+ *   2. Every surface (buttons/toggles/sliders) gets backdrop-filter: url(...)
+ *   3. Chromatic aberration via three RGB displacement passes (in the SVG)
+ *   4. Specular rim via layered inset box-shadows
+ *   5. Elastic overshoot transition + border-radius wobble on :active
+ *   6. @supports gate so Safari/Firefox gracefully fall back to frosted glass
+ *   7. prefers-reduced-motion / prefers-reduced-transparency respected
  */
 @layer lism-custom {
+  /* Colorful wallpaper so refraction is visible */
   .lq-wallpaper {
     position: fixed;
     inset: 0;
@@ -28,7 +34,6 @@
       radial-gradient(circle at 50% 50%, oklch(85% 0.18 320 / 0.4) 0, transparent 10%);
     filter: blur(20px);
   }
-
   html[data-theme='light'] .lq-wallpaper {
     background:
       radial-gradient(ellipse 60% 40% at 20% 20%, oklch(90% 0.15 330 / 0.8), transparent 60%),
@@ -38,97 +43,159 @@
       linear-gradient(135deg, oklch(92% 0.08 280), oklch(88% 0.1 330));
   }
 
-  /* Core glass primitive */
-  .lq {
+  /* ===== The one true glass primitive ===== */
+  .lq-surface {
     position: relative;
-    background: color-mix(in srgb, white 22%, transparent);
-    backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
-    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
-    border: 1px solid color-mix(in srgb, white 35%, transparent);
-    box-shadow:
-      0 8px 32px color-mix(in srgb, black 25%, transparent),
-      inset 0 1px 0 color-mix(in srgb, white 60%, transparent),
-      inset 0 -1px 0 color-mix(in srgb, black 10%, transparent);
+    background: color-mix(in srgb, white 16%, transparent);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid color-mix(in srgb, white 38%, transparent);
     color: white;
-  }
-  html[data-theme='light'] .lq {
-    background: color-mix(in srgb, white 40%, transparent);
-    border: 1px solid color-mix(in srgb, white 60%, transparent);
     box-shadow:
-      0 8px 32px color-mix(in srgb, black 12%, transparent),
-      inset 0 1px 0 color-mix(in srgb, white 70%, transparent);
-    color: #1b1d1f;
+      0 10px 32px color-mix(in srgb, black 25%, transparent),
+      inset 0 1.5px 0.5px color-mix(in srgb, white 55%, transparent),
+      inset 0 -10px 20px color-mix(in srgb, white 12%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, white 8%, transparent);
+    transition:
+      transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      border-radius 450ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background 180ms ease,
+      box-shadow 180ms ease;
+    will-change: transform, border-radius;
   }
 
-  /* Refraction variant using SVG filter — Chromium-only; others fall back to pure blur glass */
+  /* Chromium-only: physics-based refraction through the SVG filter.
+   * The pre-blur is kept deliberately small so the displacement is actually visible.
+   * The wallpaper's sharp edges (radial gradient boundaries) are what make refraction
+   * legible — without them, even a correct filter looks like "just more blur". */
   @supports (backdrop-filter: url(#lq-refraction)) {
-    .lq-refract {
-      backdrop-filter: blur(10px) saturate(180%) url(#lq-refraction);
-      -webkit-backdrop-filter: blur(10px) saturate(180%) url(#lq-refraction);
+    .lq-surface {
+      -webkit-backdrop-filter: saturate(180%) url(#lq-refraction);
+      backdrop-filter: saturate(180%) url(#lq-refraction);
+    }
+    /* Reduce tint so refracted backdrop is visible through the glass */
+    .lq-surface {
+      background: color-mix(in srgb, white 8%, transparent);
+    }
+    html[data-theme='light'] .lq-surface {
+      background: color-mix(in srgb, white 22%, transparent);
     }
   }
 
-  /* Pill-shaped toggle row */
+  html[data-theme='light'] .lq-surface {
+    background: color-mix(in srgb, white 34%, transparent);
+    border: 1px solid color-mix(in srgb, white 60%, transparent);
+    box-shadow:
+      0 10px 32px color-mix(in srgb, black 12%, transparent),
+      inset 0 1.5px 0.5px color-mix(in srgb, white 70%, transparent),
+      inset 0 -10px 20px color-mix(in srgb, white 28%, transparent);
+    color: #1b1d1f;
+  }
+
+  /* Interactive surfaces → squishy on press */
+  .lq-interactive {
+    cursor: pointer;
+  }
+  .lq-interactive:hover {
+    transform: scale(1.04);
+  }
+  .lq-interactive:active {
+    transform: scale(0.93);
+    border-radius: calc(var(--lq-radius, 28px) + 8px);
+    transition-duration: 120ms;
+    background: color-mix(in srgb, white 32%, transparent);
+  }
+  html[data-theme='light'] .lq-interactive:active {
+    background: color-mix(in srgb, white 60%, transparent);
+  }
+
+  /* ===== Connectivity toggles (Wi-Fi/Bluetooth/etc) ===== */
   .lq-toggle {
     width: 100%;
     aspect-ratio: 1;
     border-radius: 50%;
+    --lq-radius: 999px;
     display: grid;
     place-items: center;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease;
     color: currentColor;
   }
   .lq-toggle[aria-pressed='true'] {
-    background: color-mix(in srgb, white 80%, transparent);
+    background: color-mix(in srgb, white 78%, transparent);
     color: oklch(45% 0.25 250);
-    box-shadow: 0 0 24px color-mix(in srgb, oklch(80% 0.2 220) 80%, transparent);
+    box-shadow:
+      0 0 24px color-mix(in srgb, oklch(80% 0.2 220) 60%, transparent),
+      inset 0 1.5px 0.5px color-mix(in srgb, white 85%, transparent);
   }
-  .lq-toggle:active { transform: scale(0.94); }
-
-  /* Slider (vertical) */
-  .lq-slider {
-    position: relative;
-    border-radius: 28px;
-    overflow: hidden;
-    cursor: grab;
-  }
-  .lq-slider_fill {
-    position: absolute;
-    inset: auto 0 0 0;
-    background: color-mix(in srgb, white 85%, transparent);
-    transition: height 0.15s ease;
-    box-shadow: 0 0 20px color-mix(in srgb, white 60%, transparent);
-  }
-  .lq-slider_icon {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    color: oklch(30% 0.1 260);
-    mix-blend-mode: plus-lighter;
+  .lq-toggle[aria-pressed='true']:active {
+    background: color-mix(in srgb, white 90%, transparent);
   }
 
-  /* Round control button */
+  /* ===== Round control buttons (Play / Flashlight / etc) ===== */
   .lq-btn {
     width: 56px;
     height: 56px;
     border-radius: 50%;
+    --lq-radius: 999px;
     display: grid;
     place-items: center;
-    cursor: pointer;
-    background: color-mix(in srgb, white 25%, transparent);
-    border: 1px solid color-mix(in srgb, white 40%, transparent);
     color: white;
-    transition: background 0.15s, transform 0.15s;
-  }
-  .lq-btn:hover { background: color-mix(in srgb, white 40%, transparent); }
-  .lq-btn:active { transform: scale(0.92); }
-  .lq-btn.is-on {
-    background: color-mix(in srgb, white 90%, transparent);
-    color: oklch(30% 0.1 260);
   }
   html[data-theme='light'] .lq-btn { color: #1b1d1f; }
+  .lq-btn.is-on {
+    background: color-mix(in srgb, white 85%, transparent);
+    color: oklch(30% 0.1 260);
+  }
 
-  .lq-connectivity-icon { color: inherit; }
+  /* ===== Vertical slider ===== */
+  .lq-slider {
+    position: relative;
+    border-radius: 28px;
+    --lq-radius: 28px;
+    overflow: hidden;
+    cursor: grab;
+  }
+  .lq-slider:active { cursor: grabbing; }
+  .lq-slider_fill {
+    position: absolute;
+    inset: auto 0 0 0;
+    background: linear-gradient(180deg,
+      color-mix(in srgb, white 95%, transparent),
+      color-mix(in srgb, white 80%, transparent));
+    transition: height 120ms ease-out;
+    box-shadow:
+      0 0 20px color-mix(in srgb, white 50%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 70%, transparent);
+  }
+  .lq-slider_icon {
+    position: absolute;
+    inset: auto 0 16px 0;
+    display: grid;
+    place-items: center;
+    color: oklch(30% 0.1 260);
+    mix-blend-mode: plus-lighter;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ===== Reduced motion / transparency ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .lq-surface {
+      transition: background 180ms ease;
+    }
+    .lq-interactive:hover,
+    .lq-interactive:active {
+      transform: none;
+      border-radius: var(--lq-radius, 28px);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .lq-surface {
+      background: color-mix(in srgb, white 85%, transparent);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    html[data-theme='dark'] .lq-surface {
+      background: color-mix(in srgb, #222 85%, transparent);
+    }
+  }
 }
