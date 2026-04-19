@@ -3,9 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import { Lism, Stack, Center, Heading, Text, Flex, FluidCols, Cluster, Box } from 'lism-css/astro';
 
 const spacingTokens = ['5', '10', '15', '20', '30', '40'];
-const radiusTokens = ['4', '8', '12', '20', '999'];
+const radiusTokens = ['10', '20', '30', '40', '99'];
 const fzTokens = ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'];
-const shadowTokens = ['1', '2', '3', '4'];
+const shadowTokens = ['10', '20', '30', '40'];
+const colorSwatches = [
+  { name: 'base', text: 'text' },
+  { name: 'base-2', text: 'text' },
+  { name: 'text', text: 'base' },
+  { name: 'text-2', text: 'base' },
+  { name: 'link', text: 'base' },
+  { name: 'accent', text: 'base' },
+  { name: 'divider', text: 'text' },
+];
 ---
 
 <Layout title="Property Class — Lism Playground">
@@ -25,13 +34,13 @@ const shadowTokens = ['1', '2', '3', '4'];
         <Stack g="16">
           <Stack g="4">
             <Heading level="2" fz="2xl" ff="accent">-p (padding)</Heading>
-            <Text c="text-2" fz="s">SPACING トークン別に padding を可視化</Text>
+            <Text c="text-2" fz="s">SPACING トークン別に padding を可視化(外枠がパディング領域、中身が実コンテンツ)</Text>
           </Stack>
           <FluidCols g="12" style={{ '--cols': '160px' }}>
             {spacingTokens.map((p) => (
               <Stack g="6" ai="center">
-                <Box p={p} bdrs="8" bd bdc="divider" bgc="base-2" w="100%">
-                  <Box bdrs="4" bgc="link" h="24"></Box>
+                <Box p={p} bdrs="10" bd bdc="accent" w="100%" style={{ 'border-style': 'dashed', background: 'color-mix(in srgb, var(--accent) 8%, transparent)' }}>
+                  <Box bdrs="10" bgc="accent" h="24"></Box>
                 </Box>
                 <Text fz="xs" ff="mono" c="text-2">-p:{p}</Text>
               </Stack>
@@ -43,12 +52,12 @@ const shadowTokens = ['1', '2', '3', '4'];
         <Stack g="16">
           <Stack g="4">
             <Heading level="2" fz="2xl" ff="accent">-bdrs (border-radius)</Heading>
-            <Text c="text-2" fz="s">角丸の値ごとの差を比較</Text>
+            <Text c="text-2" fz="s">角丸トークンごとの差を比較</Text>
           </Stack>
           <Cluster g="20">
             {radiusTokens.map((r) => (
               <Stack g="6" ai="center">
-                <Box w="80" h="80" bgc="base-2" bd bdc="divider" bdrs={r}></Box>
+                <Box w="80" h="80" bgc="accent" bdrs={r}></Box>
                 <Text fz="xs" ff="mono" c="text-2">-bdrs:{r}</Text>
               </Stack>
             ))}
@@ -75,12 +84,12 @@ const shadowTokens = ['1', '2', '3', '4'];
         <Stack g="16">
           <Stack g="4">
             <Heading level="2" fz="2xl" ff="accent">-bxsh (box-shadow)</Heading>
-            <Text c="text-2" fz="s">影の段階別表現</Text>
+            <Text c="text-2" fz="s">影トークン別の階調</Text>
           </Stack>
           <FluidCols g="20" style={{ '--cols': '180px' }}>
             {shadowTokens.map((s) => (
               <Stack g="8" ai="center" p="20">
-                <Box w="100" h="100" bdrs="12" bgc="base" bd bdc="divider" bxsh={s}></Box>
+                <Box w="100" h="100" bdrs="20" bgc="base" bxsh={s}></Box>
                 <Text fz="xs" ff="mono" c="text-2">-bxsh:{s}</Text>
               </Stack>
             ))}
@@ -91,18 +100,12 @@ const shadowTokens = ['1', '2', '3', '4'];
         <Stack g="16">
           <Stack g="4">
             <Heading level="2" fz="2xl" ff="accent">-bgc (background-color)</Heading>
-            <Text c="text-2" fz="s">Lism の基本トークン配色</Text>
+            <Text c="text-2" fz="s">Lism の基本カラートークン</Text>
           </Stack>
           <FluidCols g="12" style={{ '--cols': '140px' }}>
-            {[
-              { name: 'base', text: 'text' },
-              { name: 'base-2', text: 'text' },
-              { name: 'text', text: 'base' },
-              { name: 'text-2', text: 'base' },
-              { name: 'link', text: 'base' },
-            ].map(({ name, text }) => (
+            {colorSwatches.map(({ name, text }) => (
               <Stack g="6" ai="center">
-                <Box bgc={name} c={text} w="100%" h="60" bdrs="8" bd bdc="divider" d="flex" ai="center" jc="center">
+                <Box bgc={name} c={text} w="100%" h="60" bdrs="10" bd bdc="divider" d="flex" ai="center" jc="center">
                   <Text fz="xs" ff="mono">{name}</Text>
                 </Box>
               </Stack>
