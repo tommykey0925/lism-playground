@@ -101,7 +101,7 @@
   }
   .lq-interactive:active {
     transform: scale(0.93);
-    border-radius: calc(var(--lq-radius, 28px) + 8px);
+    border-radius: calc(var(--lq-radius, 1rem) + 8px);
     transition-duration: 120ms;
     background: color-mix(in srgb, white 32%, transparent);
   }
@@ -185,7 +185,7 @@
     .lq-interactive:hover,
     .lq-interactive:active {
       transform: none;
-      border-radius: var(--lq-radius, 28px);
+      border-radius: var(--lq-radius, 1rem);
     }
   }
   @media (prefers-reduced-transparency: reduce) {

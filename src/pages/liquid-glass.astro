@@ -22,17 +22,6 @@ const mapHref = `data:image/svg+xml;utf8,${mapSvg}`;
         <feGaussianBlur in="map" stdDeviation="2" result="softmap"></feGaussianBlur>
         <feDisplacementMap in="SourceGraphic" in2="softmap" scale="40" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
       </filter>
-
-      {/* Chromatic variant: split R/B channels with offset scales for glass edge rainbow */}
-      <filter id="lq-refraction-chroma" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
-        <feImage result="map" href={mapHref} preserveAspectRatio="none"></feImage>
-        <feGaussianBlur in="map" stdDeviation="2" result="softmap"></feGaussianBlur>
-        <feDisplacementMap in="SourceGraphic" in2="softmap" scale="44" xChannelSelector="R" yChannelSelector="G" result="dispR"></feDisplacementMap>
-        <feColorMatrix in="dispR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="onlyR"></feColorMatrix>
-        <feDisplacementMap in="SourceGraphic" in2="softmap" scale="36" xChannelSelector="R" yChannelSelector="G" result="dispB"></feDisplacementMap>
-        <feColorMatrix in="dispB" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="GB"></feColorMatrix>
-        <feBlend in="onlyR" in2="GB" mode="screen"></feBlend>
-      </filter>
     </defs>
   </svg>
 
@@ -53,7 +42,7 @@ const mapHref = `data:image/svg+xml;utf8,${mapSvg}`;
       <Grid g="16" style={{ 'grid-template-columns': 'repeat(3, minmax(0, 1fr))', 'grid-auto-rows': 'minmax(120px, auto)' }}>
 
         {/* Connectivity quad */}
-        <Box class="lq-surface" bdrs="28" p="16" style={{ 'grid-column': 'span 1', '--lq-radius': '28px' }}>
+        <Box class="lq-surface" bdrs="30" p="16" style={{ 'grid-column': 'span 1', '--lq-radius': '1rem' }}>
           <Grid g="12" style={{ 'grid-template-columns': 'repeat(2, 1fr)' }}>
             <button class="lq-surface lq-interactive lq-toggle" aria-pressed="true" aria-label="Airplane mode">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
@@ -73,9 +62,9 @@ const mapHref = `data:image/svg+xml;utf8,${mapSvg}`;
         </Box>
 
         {/* Music player */}
-        <Box class="lq-surface" bdrs="28" p="20" style={{ 'grid-column': 'span 1', '--lq-radius': '28px' }}>
+        <Box class="lq-surface" bdrs="30" p="20" style={{ 'grid-column': 'span 1', '--lq-radius': '1rem' }}>
           <Flex g="14" ai="center">
-            <Box w="56px" h="56px" bdrs="12" style={{ background: 'linear-gradient(135deg, oklch(70% 0.25 20), oklch(55% 0.28 330))', 'box-shadow': '0 4px 12px rgba(0,0,0,0.3)', flex: '0 0 auto' }}></Box>
+            <Box w="56px" h="56px" bdrs="10" style={{ background: 'linear-gradient(135deg, oklch(70% 0.25 20), oklch(55% 0.28 330))', 'box-shadow': '0 4px 12px rgba(0,0,0,0.3)', flex: '0 0 auto' }}></Box>
             <Stack g="2" fxg="1" style={{ 'min-width': '0' }}>
               <Text fw="bold" fz="s" style={{ overflow: 'hidden', 'text-overflow': 'ellipsis', 'white-space': 'nowrap' }}>Refraction</Text>
               <Text fz="xs" o="80" style={{ overflow: 'hidden', 'text-overflow': 'ellipsis', 'white-space': 'nowrap' }}>Liquid Glass Band</Text>
@@ -105,7 +94,7 @@ const mapHref = `data:image/svg+xml;utf8,${mapSvg}`;
         </Box>
 
         {/* Orientation + Focus + Mute + Flashlight row */}
-        <Box class="lq-surface" bdrs="28" p="14" style={{ 'grid-column': 'span 2', '--lq-radius': '28px' }}>
+        <Box class="lq-surface" bdrs="30" p="14" style={{ 'grid-column': 'span 2', '--lq-radius': '1rem' }}>
           <Flex jc="around" ai="center" g="10">
             <button class="lq-surface lq-interactive lq-btn" aria-label="Rotation lock" data-toggle>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -123,7 +112,7 @@ const mapHref = `data:image/svg+xml;utf8,${mapSvg}`;
         </Box>
 
         {/* Weather widget */}
-        <Box class="lq-surface" bdrs="28" p="18" style={{ '--lq-radius': '28px' }}>
+        <Box class="lq-surface" bdrs="30" p="18" style={{ '--lq-radius': '1rem' }}>
           <Stack g="8">
             <Flex jc="between" ai="center">
               <Text fz="xs" o="75" fw="bold">TOKYO</Text>
@@ -135,7 +124,7 @@ const mapHref = `data:image/svg+xml;utf8,${mapSvg}`;
         </Box>
 
         {/* Calendar widget */}
-        <Box class="lq-surface" bdrs="28" p="18" style={{ '--lq-radius': '28px' }}>
+        <Box class="lq-surface" bdrs="30" p="18" style={{ '--lq-radius': '1rem' }}>
           <Stack g="8">
             <Flex jc="between" ai="center">
               <Text fz="xs" o="75" fw="bold">APR 20</Text>
@@ -147,15 +136,15 @@ const mapHref = `data:image/svg+xml;utf8,${mapSvg}`;
         </Box>
 
         {/* Battery widget */}
-        <Box class="lq-surface" bdrs="28" p="18" style={{ '--lq-radius': '28px' }}>
+        <Box class="lq-surface" bdrs="30" p="18" style={{ '--lq-radius': '1rem' }}>
           <Stack g="8">
             <Flex jc="between" ai="center">
               <Text fz="xs" o="75" fw="bold">BATTERY</Text>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
             </Flex>
             <Text fz="3xl" fw="bold" lh="xs">82%</Text>
-            <Box bdrs="999" h="6px" style={{ background: 'color-mix(in srgb, white 25%, transparent)', overflow: 'hidden' }}>
-              <Box h="100%" w="82%" bdrs="999" style={{ background: 'oklch(80% 0.2 140)' }}></Box>
+            <Box bdrs="99" h="6px" style={{ background: 'color-mix(in srgb, white 25%, transparent)', overflow: 'hidden' }}>
+              <Box h="100%" w="82%" bdrs="99" style={{ background: 'oklch(80% 0.2 140)' }}></Box>
             </Box>
           </Stack>
         </Box>
