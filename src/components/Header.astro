@@ -1,5 +1,6 @@
 ---
-import { Lism, Flex, Cluster, Link, Text } from 'lism-css/astro';
+import { Lism, Flex, Cluster, Link, Text, Icon, Stack } from 'lism-css/astro';
+import { Modal } from '@lism-css/ui/astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -12,12 +13,25 @@ const nav = [
 ];
 ---
 
-<Lism as="header" isContainer set="gutter" bd-b bdc="divider" pos="sticky" t="0" z="10" bgc="base" style={{ '--bgc': 'color-mix(in srgb, var(--base) 80%, transparent)', 'backdrop-filter': 'blur(10px)' }}>
+<Lism
+  as="header"
+  isContainer
+  set="gutter"
+  bd-b
+  bdc="divider"
+  pos="sticky"
+  t="0"
+  z="10"
+  bgc="base"
+  style={{ '--bgc': 'color-mix(in srgb, var(--base) 80%, transparent)', 'backdrop-filter': 'blur(10px)' }}
+>
   <Flex ai="center" jc="between" py="16" g="20">
     <Link href={`${base}/`} td="none" c="text" fw="bold" fz="l">
       <Text as="span" ff="accent">Lism Playground</Text>
     </Link>
-    <Cluster as="nav" g={['5', '10']} ai="center">
+
+    {/* Desktop nav — visible only at md (800px+) */}
+    <Cluster as="nav" g={['5', '10']} ai="center" d={['none', null, 'flex']}>
       {nav.map(({ href, label }) => (
         <Link
           href={href}
@@ -35,5 +49,76 @@ const nav = [
       ))}
       <ThemeToggle />
     </Cluster>
+
+    {/* Mobile hamburger — hidden at md+ */}
+    <Modal.OpenBtn
+      modalId="site-nav"
+      d={['grid', null, 'none']}
+      ai="center"
+      jc="center"
+      w="40px"
+      h="40px"
+      bdrs="10"
+      bgc="base"
+      bd
+      bdc="divider"
+      hov={{ bgc: 'base-2' }}
+      aria-label="メニューを開く"
+    >
+      <Icon icon="menu" fz="xl" />
+    </Modal.OpenBtn>
   </Flex>
+
+  <Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
+    <Modal.Inner
+      layout="stack"
+      g="20"
+      w="100%"
+      max-h="100%"
+      pos="relative"
+      py="20"
+      py-s="30"
+      bdrs="20"
+      bxsh="40"
+      bgc="base"
+    >
+      <Modal.CloseBtn
+        modalId="site-nav"
+        autofocus
+        pos="absolute"
+        t="0"
+        r="0"
+        z="1"
+        fz="xl"
+        p="10"
+        m="15"
+        bxsh="10"
+        bdrs="10"
+        bgc="base-2"
+      />
+      <Modal.Body layout="stack" g="20" px="30" py-s="40" ov-y="auto">
+        <Stack g="4">
+          {nav.map(({ href, label }) => (
+            <Link
+              href={href}
+              set="transition"
+              c="text"
+              fz="l"
+              td="none"
+              px="16"
+              py="12"
+              bdrs="8"
+              hov={{ bgc: 'base-2' }}
+            >
+              {label}
+            </Link>
+          ))}
+        </Stack>
+        <Cluster g="10" bd-t bdc="divider" pt="20" ai="center">
+          <Text fz="s" c="text-2">Theme</Text>
+          <ThemeToggle />
+        </Cluster>
+      </Modal.Body>
+    </Modal.Inner>
+  </Modal.Root>
 </Lism>

@@ -1,4 +1,5 @@
 @import 'lism-css/main.css';
+@import '@lism-css/ui/style.css';
 
 /* Dark mode token overrides (aligned with the official Lism docs theme:
  * https://github.com/lism-css/lism-css/blob/main/apps/docs/src/styles/_theme.scss)
