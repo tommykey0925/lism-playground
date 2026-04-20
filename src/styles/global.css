@@ -1,14 +1,25 @@
 @import 'lism-css/main.css';
 
-/* Dark mode: applied when <html data-theme="dark"> is set */
+/* Dark mode token overrides (aligned with the official Lism docs theme:
+ * https://github.com/lism-css/lism-css/blob/main/apps/docs/src/styles/_theme.scss)
+ * applied when <html data-theme="dark"> is set. */
 @layer lism-base {
   :root[data-theme='dark'] {
-    --base: hsl(220, 4%, 12%);
-    --base-2: hsl(220, 8%, 4%);
-    --text: hsl(200, 12%, 95%);
-    --text-2: hsl(200, 8%, 76%);
+    --brand: hsl(192, 72%, 56%);
+    --accent: #ff5080;
+
+    --base: hsl(228, 10%, 8%);
+    --base-2: hsl(228, 8%, 20%);
+
+    --text: hsl(48, 12%, 95%);
+    --text-2: hsl(48, 8%, 84%);
+
     --link: oklch(72% 0.2 224);
-    --divider: hsl(225, 3%, 26%);
+    --divider: hsl(224 4% 24%);
+
+    /* Shadow color tuned for dark surfaces — pale blue-grey @ 5% alpha
+     * so -bxsh tokens stay visible against the darker body. */
+    --shc: hsl(215 40% 76% / 5%);
   }
 }
 
