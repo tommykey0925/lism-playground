@@ -24,10 +24,10 @@ const items = Array.from({ length: 6 }, (_, i) => i + 1);
             <Heading level="2" fz="2xl" ff="accent">Stack</Heading>
             <Text c="text-2" fz="s">子要素を縦に等間隔で積む</Text>
           </Stack>
-          <Box p="24" bdrs="12" bd bdc="divider" bgc="base-2">
+          <Box p="24" bdrs="10" bd bdc="divider" bgc="base-2">
             <Stack g="12">
               {items.slice(0, 4).map((n) => (
-                <Box p="14" bdrs="8" bgc="base" bd bdc="divider" ta="center" fw="bold">Item {n}</Box>
+                <Box p="14" bdrs="10" bgc="base" bd bdc="divider" ta="center" fw="bold">Item {n}</Box>
               ))}
             </Stack>
           </Box>
@@ -39,10 +39,10 @@ const items = Array.from({ length: 6 }, (_, i) => i + 1);
             <Heading level="2" fz="2xl" ff="accent">Flex / Cluster</Heading>
             <Text c="text-2" fz="s">横並び(折返しあり)。Cluster は Flex の折返し特化版</Text>
           </Stack>
-          <Box p="24" bdrs="12" bd bdc="divider" bgc="base-2">
+          <Box p="24" bdrs="10" bd bdc="divider" bgc="base-2">
             <Cluster g="10">
               {items.map((n) => (
-                <Box px="16" py="10" bdrs="999" bgc="base" bd bdc="divider" fz="s">Chip {n}</Box>
+                <Box px="16" py="10" bdrs="99" bgc="base" bd bdc="divider" fz="s">Chip {n}</Box>
               ))}
             </Cluster>
           </Box>
@@ -54,10 +54,10 @@ const items = Array.from({ length: 6 }, (_, i) => i + 1);
             <Heading level="2" fz="2xl" ff="accent">Grid</Heading>
             <Text c="text-2" fz="s">明示的なカラム指定グリッド</Text>
           </Stack>
-          <Box p="24" bdrs="12" bd bdc="divider" bgc="base-2">
+          <Box p="24" bdrs="10" bd bdc="divider" bgc="base-2">
             <Grid g="12" style={{ 'grid-template-columns': 'repeat(3, 1fr)' }}>
               {items.map((n) => (
-                <Box p="20" bdrs="8" bgc="base" bd bdc="divider" ta="center" fw="bold">{n}</Box>
+                <Box p="20" bdrs="10" bgc="base" bd bdc="divider" ta="center" fw="bold">{n}</Box>
               ))}
             </Grid>
           </Box>
@@ -69,10 +69,10 @@ const items = Array.from({ length: 6 }, (_, i) => i + 1);
             <Heading level="2" fz="2xl" ff="accent">TileGrid</Heading>
             <Text c="text-2" fz="s">最小幅を指定すると自動でタイル数が決まる</Text>
           </Stack>
-          <Box p="24" bdrs="12" bd bdc="divider" bgc="base-2">
+          <Box p="24" bdrs="10" bd bdc="divider" bgc="base-2">
             <FluidCols g="12" style={{ '--cols': '160px' }}>
               {items.map((n) => (
-                <Box p="20" bdrs="8" bgc="base" bd bdc="divider" ta="center" fw="bold">Tile {n}</Box>
+                <Box p="20" bdrs="10" bgc="base" bd bdc="divider" ta="center" fw="bold">Tile {n}</Box>
               ))}
             </FluidCols>
           </Box>
@@ -84,7 +84,7 @@ const items = Array.from({ length: 6 }, (_, i) => i + 1);
             <Heading level="2" fz="2xl" ff="accent">Columns</Heading>
             <Text c="text-2" fz="s">マルチカラムレイアウト(雑誌風)</Text>
           </Stack>
-          <Box p="24" bdrs="12" bd bdc="divider" bgc="base-2">
+          <Box p="24" bdrs="10" bd bdc="divider" bgc="base-2">
             <Columns g="20" style={{ '--cols': '3' }}>
               <Text c="text" fz="s">Lism CSS は Every Layout / Tailwind / ITCSS / Chakra の良いとこ取りをした、レイアウト重視の軽量 CSS フレームワークです。</Text>
               <Text c="text" fz="s">Primitives と呼ばれるレイアウト用クラスを組み合わせるだけで、ほとんどのページ骨格が書けます。</Text>
@@ -99,15 +99,15 @@ const items = Array.from({ length: 6 }, (_, i) => i + 1);
             <Heading level="2" fz="2xl" ff="accent">SideMain</Heading>
             <Text c="text-2" fz="s">サイドバー + メイン。狭いと縦積みに</Text>
           </Stack>
-          <Box p="24" bdrs="12" bd bdc="divider" bgc="base-2">
+          <Box p="24" bdrs="10" bd bdc="divider" bgc="base-2">
             <SideMain g="20" sideW="200">
-              <Box p="20" bdrs="8" bgc="base" bd bdc="divider">
+              <Box p="20" bdrs="10" bgc="base" bd bdc="divider">
                 <Stack g="8">
                   <Text fw="bold">Sidebar</Text>
                   <Text c="text-2" fz="s">Nav / メタ情報など</Text>
                 </Stack>
               </Box>
-              <Box p="20" bdrs="8" bgc="base" bd bdc="divider">
+              <Box p="20" bdrs="10" bgc="base" bd bdc="divider">
                 <Stack g="8">
                   <Text fw="bold">Main</Text>
                   <Text c="text-2" fz="s">メインコンテンツ。コンテナ幅が狭くなると自動で縦積みに切り替わります(Container Query ベース)。</Text>
